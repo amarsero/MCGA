@@ -21,9 +21,10 @@ namespace ASF.Framework.Utilities
 
             return (doc.Descendants("channel").Elements("item").Select(i => new RssItem
             {
-                Title = i.Element("title")?.Value,
-                Link = i.Element("link")?.Value,
-                Description = i.Element("description")?.Value
+
+                Title = i.Element("title") != null ? i.Element("title").Value : null,
+                Link = i.Element("link") != null ? i.Element("link").Value : null,
+                Description = i.Element("description") != null ? i.Element("description").Value : null
             })).ToList();
         }
     }

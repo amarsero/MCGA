@@ -864,7 +864,8 @@ namespace ASF.Framework.Utilities
                 {
                     foreach (var image in nodes)
                     {
-                        HtmlAttribute imageUrl = image?.Attributes[@"src"];
+                        HtmlAttribute imageUrl = image != null ? image.Attributes[@"src"] : null;
+
                         if (imageUrl != null && !imageUrl.Value.Contains("http"))
                         {
                             imageUrl.Value = string.Concat(domain, imageUrl.Value);
@@ -894,7 +895,7 @@ namespace ASF.Framework.Utilities
                 {
                     foreach (var image in nodes.Take(amount))
                     {
-                        var imageUrl = image?.Attributes[@"src"];
+                        HtmlAttribute imageUrl = image != null ? image.Attributes[@"src"] : null;
                         if (imageUrl != null)
                         {
                             images.Add(imageUrl.Value);
@@ -935,7 +936,7 @@ namespace ASF.Framework.Utilities
         /// <returns></returns>
         public static string ReturnImageHtml(string url, string alt)
         {
-            return $"<img src=\"{url}\" alt=\"{alt}\" />";
+            return String.Format("<img src=\"{0}\" alt=\"{1}\" />",url,alt);
         }
         #endregion
 
@@ -1019,7 +1020,7 @@ namespace ASF.Framework.Utilities
         /// <returns></returns>
         public static string FormatCurrency(int? amount)
         {
-            return amount != null ? $"{amount:C}" : "n/a";
+            return amount != null ? String.Format("{0:C}",amount) : "n/a";
         }
 
         /// <summary>
@@ -1078,7 +1079,7 @@ namespace ASF.Framework.Utilities
 
                             // Find links 
 
-                            result.AppendLine(reg.Replace(line, $"<p><img src=\"//instagram.com/p/{idRegex.Match(url)}/media/?size=l\" class=\"img-responsive\" /></p>"));
+                            result.AppendLine(reg.Replace(line, String.Format("<p><img src=\"//instagram.com/p/{0}/media/?size=l\" class=\"img-responsive\" /></p>", idRegex.Match(url))));
                         }
                         else
                         {
