@@ -22,7 +22,7 @@ namespace ASF.UI.Process
         /// <param name="parameters">A dictionary containing the parameters and values to form the query.</param>
         /// <param name="mediaType">The media type to use i.e. application/xml or application/json.</param>
         /// <returns>An object specified in the generic type.</returns>
-        protected static T HttpGet<T>(string path, Dictionary<string, object> parameters, string mediaType)
+        protected static T HttpGet<T>(string path, Dictionary<string, object> parameters, string mediaType = MediaType.Json)
         {
             UriBuilder builder = new UriBuilder
             {
@@ -44,7 +44,7 @@ namespace ASF.UI.Process
         /// <param name="values">A list of parameter values to form the query.</param>
         /// <param name="mediaType">The media type to use i.e. application/xml or application/json.</param>
         /// <return
-        protected static T HttpGet<T>(string path, List<object> values, string mediaType)
+        protected static T HttpGet<T>(string path, List<object> values, string mediaType = MediaType.Json)
         {
             string query = string.Empty;
             string pathAndQuery = path.EndsWith("/") ? path : path += "/";
@@ -84,7 +84,7 @@ namespace ASF.UI.Process
             return result;
         }
 
-        public static T HttpPost<T>(string path, T value, string mediaType)
+        public static T HttpPost<T>(string path, T value, string mediaType = MediaType.Json)
         {
             
             var pathAndQuery = path.EndsWith("/") ? path : path + "/";
@@ -93,6 +93,22 @@ namespace ASF.UI.Process
                 client.BaseAddress = new Uri(ConfigurationManager.AppSettings["serviceUrl"]);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.PostAsJsonAsync(pathAndQuery, value).Result;
+                response.EnsureSuccessStatusCode();
+                return value;
+
+            }
+
+        }
+
+        public static T HttpPut<T>(string path, T value, string mediaType = MediaType.Json)
+        {
+
+            var pathAndQuery = path.EndsWith("/") ? path : path + "/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(ConfigurationManager.AppSettings["serviceUrl"]);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+                var response = client.PutAsJsonAsync(pathAndQuery, value).Result;
                 response.EnsureSuccessStatusCode();
                 return value;
 
