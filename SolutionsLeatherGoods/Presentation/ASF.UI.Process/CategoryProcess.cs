@@ -44,7 +44,7 @@ namespace ASF.UI.Process
 
         public void Edit(Category categoria)
         {
-            var response = HttpPut<Category>("rest/Category/Edit", categoria);
+            var response = HttpPost<Category>("rest/Category/Edit", categoria);
         }
 
     }
