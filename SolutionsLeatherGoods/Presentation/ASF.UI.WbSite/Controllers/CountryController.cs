@@ -9,39 +9,33 @@ using ASF.UI.WbSite.Services.Cache;
 
 namespace ASF.UI.WbSite.Controllers
 {
-    public class CategoryController : Controller
+    public class CountryController : Controller
     {
-        
-
-        // GET: Category
+        // GET: Country
         public ActionResult Index()
         {
-            return View(DataCache.Instance.CategoryAll());
+            return View();
         }
 
-        // GET: Category/Details/5
+        // GET: Country/Details/5
         public ActionResult Details(int id)
         {
-            CategoryProcess pc = new CategoryProcess();
-            return View(pc.SelectOne(id));
+            return View();
         }
 
-        // GET: Category/Create
+        // GET: Country/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Category/Create
+        // POST: Country/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
             try
             {
-                CategoryProcess pc = new CategoryProcess();
-                Category cat = new Category();
-                cat.Name = collection["Name"];
-                pc.Add(cat);
+                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
@@ -51,25 +45,19 @@ namespace ASF.UI.WbSite.Controllers
             }
         }
 
-        // GET: Category/Edit/5
+        // GET: Country/Edit/5
         public ActionResult Edit(int id)
         {
-            CategoryProcess pc = new CategoryProcess();
-            return View(pc.SelectOne(id));
+            return View();
         }
 
-        // POST: Category/Edit/5
+        // POST: Country/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
-                CategoryProcess pc = new CategoryProcess();
-                Category cat = new Category();
-                cat.Name = collection["Name"];
-                cat.Id = id;
-
-                pc.Edit(cat);
+                // TODO: Add update logic here
 
                 return RedirectToAction("Index");
             }
@@ -79,24 +67,19 @@ namespace ASF.UI.WbSite.Controllers
             }
         }
 
-        // GET: Category/Delete/5
+        // GET: Country/Delete/5
         public ActionResult Delete(int id)
         {
-            CategoryProcess pc = new CategoryProcess();
-
-
-
-            return View(pc.SelectOne(id));
+            return View();
         }
 
-        // POST: Category/Delete/5
+        // POST: Country/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                CategoryProcess pc = new CategoryProcess();
-                pc.Delete(id);
+                // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
             }
@@ -106,10 +89,10 @@ namespace ASF.UI.WbSite.Controllers
             }
         }
 
-        public string ObtenerDescripcion(int id)
+        public static List<Country> SelectListCountry()
         {
-            CategoryProcess pc = new CategoryProcess();
-            return pc.SelectOne(id).Name;
+            CountryProcess cp = new CountryProcess();
+            return cp.SelectList();
         }
     }
 }

@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryDAC.cs" />
+    <Compile Include="CountryDAC.cs" />
     <Compile Include="DataAccessComponent.cs" />
+    <Compile Include="DealerDAC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

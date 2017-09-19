@@ -171,7 +171,13 @@
                     <li><a href="@Url.RouteUrl(HomeControllerRoute.GetAbout)"><span aria-hidden="true" class="fa fa-users"></span> About</a></li>
                     <li><a href="@Url.RouteUrl(HomeControllerRoute.GetContact)"><span aria-hidden="true" class="fa fa-phone"></span> Contact</a></li>
                     <li><a href="@Url.RouteUrl(HomeControllerRoute.GetFeed)"><span aria-hidden="true" class="fa fa-rss"></span> RSS</a></li>
-                    <li><a href="/Category/Index"><span aria-hidden="true" class="fa fa-flask"></span> Category</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><span aria-hidden="true" class="fa fa-cogs"></span> Negocio <span aria-hidden="true" class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/Category/Index"><span aria-hidden="true" class="fa fa-flask"></span> Category</a></li>
+                            <li><a href="/Dealer/Index"><span aria-hidden="true" class="fa fa-barcode"></span> Dealer</a></li>
+                        </ul>
+                    </li>
                     @if (HttpContext.Current.IsDebuggingEnabled)
                     {
                         // if <compilation debug="true"> is set in Web.config.
