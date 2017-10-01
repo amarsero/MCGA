@@ -558,11 +558,11 @@
     <Content Include="Views\Dealer\Create.cshtml" />
     <Content Include="Views\Dealer\Edit.cshtml" />
     <Content Include="Views\Dealer\Delete.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Categorys.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Country\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

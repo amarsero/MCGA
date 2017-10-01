@@ -88,11 +88,5 @@ namespace ASF.UI.WbSite.Controllers
                 return View();
             }
         }
-
-        public static List<Country> SelectListCountry()
-        {
-            CountryProcess cp = new CountryProcess();
-            return cp.SelectList();
-        }
     }
 }
