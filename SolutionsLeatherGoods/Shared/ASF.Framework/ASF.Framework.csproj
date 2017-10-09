@@ -43,6 +43,12 @@
       <HintPath>..\..\packages\HtmlSanitizationLibrary.1.0.0\lib\HtmlSanitizationLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\..\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\..\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -59,6 +65,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Localization\Data\LanguageDAC.cs" />
+    <Compile Include="Localization\Data\LocaleResourceKeyDAC.cs" />
+    <Compile Include="Localization\Data\LocaleStringResource.cs" />
+    <Compile Include="Localization\Enitities\Language.cs" />
+    <Compile Include="Localization\Enitities\LocaleResourceKey.cs" />
+    <Compile Include="Localization\Enitities\LocaleStringResource.cs" />
+    <Compile Include="Localization\Translator.cs" />
     <Compile Include="Utilities\BotUtils.cs" />
     <Compile Include="Utilities\CensorUtils.cs" />
     <Compile Include="Utilities\ConfigUtils.cs" />
@@ -78,6 +91,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\ASF.Data\ASF.Data.csproj">
+      <Project>{422eb420-d9bc-4286-9e35-e9e3058defe8}</Project>
+      <Name>ASF.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Localization\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
