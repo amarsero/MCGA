@@ -20,40 +20,40 @@ namespace ASF.Data
     /// <summary>
     /// 
     /// </summary>
-    public class CategoryDac : DataAccessComponent
+    public class ClientDac : DataAccessComponent
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="client"></param>
         /// <returns></returns>
-        public Category Create(Category category)
+        public Client Create(Client client)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+            const string sqlStatement ="INSERT INTO dbo.Client ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
                 "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
+                db.AddInParameter(cmd, "@Name", DbType.String, client.Name);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, client.ChangedBy);
                 // Obtener el valor de la primary key.
-                category.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+                client.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
             }
 
-            return category;
+            return client;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
-        public void UpdateById(Category category)
+        /// <param name="client"></param>
+        public void UpdateById(Client client)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
+            const string sqlStatement = "UPDATE dbo.Client " +
                 "SET [Name]=@Name, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
@@ -64,12 +64,12 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, category.Id);
+                db.AddInParameter(cmd, "@Name", DbType.String, client.Name);
+                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, client.CreatedOn);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
+                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, client.ChangedOn);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, client.ChangedBy);
+                db.AddInParameter(cmd, "@Id", DbType.Int32, client.Id);
 
                 db.ExecuteNonQuery(cmd);
             }
@@ -81,7 +81,7 @@ namespace ASF.Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE dbo.Client WHERE [Id]=@Id ";
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -95,35 +95,35 @@ namespace ASF.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Category SelectById(int id)
+        public Client SelectById(int id)
         {
             const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+                "FROM dbo.Client WHERE [Id]=@Id ";
 
-            Category category = null;
+            Client client = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
                 db.AddInParameter(cmd, "@Id", DbType.Int32, id);
                 using (var dr = db.ExecuteReader(cmd))
                 {
-                    if (dr.Read()) category = LoadCategory(dr);
+                    if (dr.Read()) client = LoadClient(dr);
                 }
             }
 
-            return category;
+            return client;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>		
-        public List<Category> Select()
+        public List<Client> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Client ";
 
-            var result = new List<Category>();
+            var result = new List<Client>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -131,8 +131,8 @@ namespace ASF.Data
                 {
                     while (dr.Read())
                     {
-                        var category = LoadCategory(dr); // Mapper
-                        result.Add(category);
+                        var client = LoadClient(dr); // Mapper
+                        result.Add(client);
                     }
                 }
             }
@@ -140,9 +140,9 @@ namespace ASF.Data
             return result;
         }
         
-        private static Category LoadCategory(IDataReader dr)
+        private static Client LoadClient(IDataReader dr)
         {
-            var category = new Category
+            var client = new Client
             {
                 Id = GetDataValue<int>(dr, "Id"),
                 Name = GetDataValue<string>(dr, "Name"),
@@ -151,7 +151,7 @@ namespace ASF.Data
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
                 ChangedBy = GetDataValue<int>(dr, "ChangedBy")
             };
-            return category;
+            return client;
         }
     }
 }

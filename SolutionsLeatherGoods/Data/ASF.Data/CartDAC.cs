@@ -20,41 +20,45 @@ namespace ASF.Data
     /// <summary>
     /// 
     /// </summary>
-    public class CategoryDac : DataAccessComponent
+    public class CartDac : DataAccessComponent
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="cart"></param>
         /// <returns></returns>
-        public Category Create(Category category)
+        public Cart Create(Cart cart)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement = "INSERT INTO dbo.Cart ([CartDate], [Cookie], [ItemCount], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+                "VALUES(@CartDate, @Cookie, @ItemCount, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
+                db.AddInParameter(cmd, "@CartDate", DbType.DateTime, cart.CartDate);
+                db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
+                db.AddInParameter(cmd, "@ItemCount", DbType.Int32, cart.ItemCount);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cart.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cart.ChangedBy);
                 // Obtener el valor de la primary key.
-                category.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+                cart.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
             }
 
-            return category;
+            return cart;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
-        public void UpdateById(Category category)
+        /// <param name="cart"></param>
+        public void UpdateById(Cart cart)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
-                "SET [Name]=@Name, " +
+            const string sqlStatement = "UPDATE dbo.Cart " +
+                "SET [CartDate]=@CartDate, " +
+                    "[Cookie]=@Cookie, " +
+                    "[ItemCount]=@ItemCount, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
@@ -64,12 +68,14 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, category.Id);
+                db.AddInParameter(cmd, "@CartDate", DbType.DateTime, cart.CartDate);
+                db.AddInParameter(cmd, "@Cookie", DbType.String, cart.Cookie);
+                db.AddInParameter(cmd, "@ItemCount", DbType.Int32, cart.ItemCount);
+                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, cart.CreatedOn);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cart.CreatedBy);
+                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, cart.ChangedOn);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cart.ChangedBy);
+                db.AddInParameter(cmd, "@Id", DbType.Int32, cart.Id);
 
                 db.ExecuteNonQuery(cmd);
             }
@@ -81,7 +87,7 @@ namespace ASF.Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE dbo.Cart WHERE [Id]=@Id ";
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -95,35 +101,35 @@ namespace ASF.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Category SelectById(int id)
+        public Cart SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT [Id], [CartDate], [Cookie], [ItemCount], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM dbo.Cart WHERE [Id]=@Id ";
 
-            Category category = null;
+            Cart cart = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
                 db.AddInParameter(cmd, "@Id", DbType.Int32, id);
                 using (var dr = db.ExecuteReader(cmd))
                 {
-                    if (dr.Read()) category = LoadCategory(dr);
+                    if (dr.Read()) cart = LoadCart(dr);
                 }
             }
 
-            return category;
+            return cart;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>		
-        public List<Category> Select()
+        public List<Cart> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT [Id], [CartDate], [Cookie], [ItemCount], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Cart ";
 
-            var result = new List<Category>();
+            var result = new List<Cart>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -131,8 +137,8 @@ namespace ASF.Data
                 {
                     while (dr.Read())
                     {
-                        var category = LoadCategory(dr); // Mapper
-                        result.Add(category);
+                        var cart = LoadCart(dr); // Mapper
+                        result.Add(cart);
                     }
                 }
             }
@@ -140,18 +146,20 @@ namespace ASF.Data
             return result;
         }
         
-        private static Category LoadCategory(IDataReader dr)
+        private static Cart LoadCart(IDataReader dr)
         {
-            var category = new Category
+            var cart = new Cart
             {
                 Id = GetDataValue<int>(dr, "Id"),
-                Name = GetDataValue<string>(dr, "Name"),
+                CartDate = GetDataValue<DateTime>(dr, "CartDate"),
+                Cookie = GetDataValue<string>(dr, "Cookie"),
+                ItemCount = GetDataValue<int>(dr, "ItemCount"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
                 ChangedBy = GetDataValue<int>(dr, "ChangedBy")
             };
-            return category;
+            return cart;
         }
     }
 }

@@ -40,9 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartItemBusiness.cs" />
+    <Compile Include="SettingBusiness.cs" />
+    <Compile Include="RatingBusiness.cs" />
+    <Compile Include="OrderNumberBusiness.cs" />
+    <Compile Include="OrderDetailBusiness.cs" />
+    <Compile Include="OrderBusiness.cs" />
+    <Compile Include="ClientBusiness.cs" />
     <Compile Include="CategoryBusiness.cs" />
     <Compile Include="CountryBusiness.cs" />
     <Compile Include="DealerBusiness.cs" />
+    <Compile Include="CartBusiness.cs" />
+    <Compile Include="ProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

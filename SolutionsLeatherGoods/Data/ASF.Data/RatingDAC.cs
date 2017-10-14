@@ -20,41 +20,45 @@ namespace ASF.Data
     /// <summary>
     /// 
     /// </summary>
-    public class CategoryDac : DataAccessComponent
+    public class RatingDac : DataAccessComponent
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="rating"></param>
         /// <returns></returns>
-        public Category Create(Category category)
+        public Rating Create(Rating rating)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement = "INSERT INTO dbo.Rating ([ClientId], [ProductId], [Stars], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+                "VALUES(@ClientId, @ProductId, @Stars, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
+                db.AddInParameter(cmd, "@ClientId", DbType.Int32, rating.ClientId);
+                db.AddInParameter(cmd, "@ProductId", DbType.Int32, rating.ProductId);
+                db.AddInParameter(cmd, "@Stars", DbType.Int32, rating.Stars);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, rating.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, rating.ChangedBy);
                 // Obtener el valor de la primary key.
-                category.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+                rating.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
             }
 
-            return category;
+            return rating;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
-        public void UpdateById(Category category)
+        /// <param name="rating"></param>
+        public void UpdateById(Rating rating)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
-                "SET [Name]=@Name, " +
+            const string sqlStatement = "UPDATE dbo.Rating " +
+                "SET [ClientId]=@ClientId, " +
+                    "[ProductId]=@ProductId, " +
+                    "[Stars]=@Stars, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
@@ -64,12 +68,14 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, category.Id);
+                db.AddInParameter(cmd, "@ClientId", DbType.Int32, rating.ClientId);
+                db.AddInParameter(cmd, "@ProductId", DbType.Int32, rating.ProductId);
+                db.AddInParameter(cmd, "@Stars", DbType.Int32, rating.Stars);
+                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, rating.CreatedOn);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, rating.CreatedBy);
+                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, rating.ChangedOn);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, rating.ChangedBy);
+                db.AddInParameter(cmd, "@Id", DbType.Int32, rating.Id);
 
                 db.ExecuteNonQuery(cmd);
             }
@@ -81,7 +87,7 @@ namespace ASF.Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE dbo.Rating WHERE [Id]=@Id ";
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -95,35 +101,35 @@ namespace ASF.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Category SelectById(int id)
+        public Rating SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT [Id], [ClientId], [ProductId], [Stars], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM dbo.Rating WHERE [Id]=@Id ";
 
-            Category category = null;
+            Rating rating = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
                 db.AddInParameter(cmd, "@Id", DbType.Int32, id);
                 using (var dr = db.ExecuteReader(cmd))
                 {
-                    if (dr.Read()) category = LoadCategory(dr);
+                    if (dr.Read()) rating = LoadRating(dr);
                 }
             }
 
-            return category;
+            return rating;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>		
-        public List<Category> Select()
+        public List<Rating> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT [Id], [ClientId], [ProductId], [Stars], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Rating ";
 
-            var result = new List<Category>();
+            var result = new List<Rating>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -131,8 +137,8 @@ namespace ASF.Data
                 {
                     while (dr.Read())
                     {
-                        var category = LoadCategory(dr); // Mapper
-                        result.Add(category);
+                        var rating = LoadRating(dr); // Mapper
+                        result.Add(rating);
                     }
                 }
             }
@@ -140,18 +146,20 @@ namespace ASF.Data
             return result;
         }
         
-        private static Category LoadCategory(IDataReader dr)
+        private static Rating LoadRating(IDataReader dr)
         {
-            var category = new Category
+            var rating = new Rating
             {
                 Id = GetDataValue<int>(dr, "Id"),
-                Name = GetDataValue<string>(dr, "Name"),
+                ClientId = GetDataValue<int>(dr, "ClientId"),
+                ProductId = GetDataValue<int>(dr, "ProductId"),
+                Stars = GetDataValue<int>(dr, "Stars"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
                 ChangedBy = GetDataValue<int>(dr, "ChangedBy")
             };
-            return category;
+            return rating;
         }
     }
 }
