@@ -20,41 +20,47 @@ namespace ASF.Data
     /// <summary>
     /// 
     /// </summary>
-    public class CategoryDac : DataAccessComponent
+    public class CartItemDac : DataAccessComponent
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="cartItem"></param>
         /// <returns></returns>
-        public Category Create(Category category)
+        public CartItem Create(CartItem cartItem)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement = "INSERT INTO dbo.CartItem ([CartId], [Price], [ProductId], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+                "VALUES(@CartId, @Price, @ProductId, @Quantity, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
+                db.AddInParameter(cmd, "@CartId", DbType.Int32, cartItem.CartId);
+                db.AddInParameter(cmd, "@Price", DbType.Decimal, cartItem.Price);
+                db.AddInParameter(cmd, "@ProductId", DbType.Int32, cartItem.ProductId);
+                db.AddInParameter(cmd, "@Quantity", DbType.Int32, cartItem.Quantity);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cartItem.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cartItem.ChangedBy);
                 // Obtener el valor de la primary key.
-                category.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+                cartItem.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
             }
 
-            return category;
+            return cartItem;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
-        public void UpdateById(Category category)
+        /// <param name="cartItem"></param>
+        public void UpdateById(CartItem cartItem)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
-                "SET [Name]=@Name, " +
+            const string sqlStatement = "UPDATE dbo.CartItem " +
+                "SET [CartId]=@CartId, " +
+                    "[Price]=@Price, " +
+                    "[ProductId]=@ProductId, " +
+                    "[Quantity]=@Quantity, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
@@ -64,12 +70,15 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, category.Id);
+                db.AddInParameter(cmd, "@CartId", DbType.Int32, cartItem.CartId);
+                db.AddInParameter(cmd, "@Price", DbType.Decimal, cartItem.Price);
+                db.AddInParameter(cmd, "@ProductId", DbType.Int32, cartItem.ProductId);
+                db.AddInParameter(cmd, "@Quantity", DbType.Int32, cartItem.Quantity);
+                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, cartItem.CreatedOn);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, cartItem.CreatedBy);
+                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, cartItem.ChangedOn);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, cartItem.ChangedBy);
+                db.AddInParameter(cmd, "@Id", DbType.Int32, cartItem.Id);
 
                 db.ExecuteNonQuery(cmd);
             }
@@ -81,7 +90,7 @@ namespace ASF.Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE dbo.CartItem WHERE [Id]=@Id ";
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -95,35 +104,35 @@ namespace ASF.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Category SelectById(int id)
+        public CartItem SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT [Id], [CartId], [Price], [ProductId], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM dbo.CartItem WHERE [Id]=@Id ";
 
-            Category category = null;
+            CartItem cartItem = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
                 db.AddInParameter(cmd, "@Id", DbType.Int32, id);
                 using (var dr = db.ExecuteReader(cmd))
                 {
-                    if (dr.Read()) category = LoadCategory(dr);
+                    if (dr.Read()) cartItem = LoadCartItem(dr);
                 }
             }
 
-            return category;
+            return cartItem;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>		
-        public List<Category> Select()
+        public List<CartItem> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT [Id], [CartId], [Price], [ProductId], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.CartItem ";
 
-            var result = new List<Category>();
+            var result = new List<CartItem>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -131,8 +140,8 @@ namespace ASF.Data
                 {
                     while (dr.Read())
                     {
-                        var category = LoadCategory(dr); // Mapper
-                        result.Add(category);
+                        var cartItem = LoadCartItem(dr); // Mapper
+                        result.Add(cartItem);
                     }
                 }
             }
@@ -140,18 +149,21 @@ namespace ASF.Data
             return result;
         }
         
-        private static Category LoadCategory(IDataReader dr)
+        private static CartItem LoadCartItem(IDataReader dr)
         {
-            var category = new Category
+            var cartItem = new CartItem
             {
                 Id = GetDataValue<int>(dr, "Id"),
-                Name = GetDataValue<string>(dr, "Name"),
+                CartId = GetDataValue<int>(dr, "CartId"),
+                Price = GetDataValue<double>(dr, "Price"),
+                ProductId = GetDataValue<int>(dr, "ProductId"),
+                Quantity = GetDataValue<int>(dr, "Quantity"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
                 ChangedBy = GetDataValue<int>(dr, "ChangedBy")
             };
-            return category;
+            return cartItem;
         }
     }
 }

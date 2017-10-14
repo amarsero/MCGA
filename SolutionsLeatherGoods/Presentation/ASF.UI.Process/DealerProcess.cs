@@ -31,15 +31,15 @@ namespace ASF.UI.Process
             var response = HttpPost<int>("rest/Dealer/Delete", id, MediaType.Json);
         }
 
-        public Dealer Add(Dealer categoria)
+        public Dealer Add(Dealer dealer)
         {
-            var response = HttpPost<Dealer>("rest/Dealer/Add", categoria);
+            var response = HttpPost<Dealer>("rest/Dealer/Add", dealer);
             return response;
         }
 
-        public void Edit(Dealer categoria)
+        public void Edit(Dealer dealer)
         {
-            var response = HttpPost<Dealer>("rest/Dealer/Edit", categoria);
+            var response = HttpPost<Dealer>("rest/Dealer/Edit", dealer);
         }
 
     }

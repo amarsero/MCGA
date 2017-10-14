@@ -20,41 +20,41 @@ namespace ASF.Data
     /// <summary>
     /// 
     /// </summary>
-    public class CategoryDac : DataAccessComponent
+    public class OrderNumberDac : DataAccessComponent
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="orderNumber"></param>
         /// <returns></returns>
-        public Category Create(Category category)
+        public OrderNumber Create(OrderNumber orderNumber)
         {
-            const string sqlStatement ="INSERT INTO dbo.Category ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement ="INSERT INTO dbo.OrderNumber ([Number], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+                "VALUES(@Number, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
+                db.AddInParameter(cmd, "@Number", DbType.Int32, orderNumber.Number);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderNumber.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderNumber.ChangedBy);
                 // Obtener el valor de la primary key.
-                category.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
+                orderNumber.Id = Convert.ToInt32(db.ExecuteScalar(cmd));
             }
 
-            return category;
+            return orderNumber;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="category"></param>
-        public void UpdateById(Category category)
+        /// <param name="orderNumber"></param>
+        public void UpdateById(OrderNumber orderNumber)
         {
-            const string sqlStatement = "UPDATE dbo.Category " +
-                "SET [Name]=@Name, " +
+            const string sqlStatement = "UPDATE dbo.OrderNumber " +
+                "SET [Number]=@Number, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
@@ -64,12 +64,12 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, category.Name);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, category.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, category.CreatedBy);
-                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, category.ChangedOn);
-                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, category.ChangedBy);
-                db.AddInParameter(cmd, "@Id", DbType.Int32, category.Id);
+                db.AddInParameter(cmd, "@Number", DbType.Int32, orderNumber.Number);
+                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, orderNumber.CreatedOn);
+                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, orderNumber.CreatedBy);
+                db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, orderNumber.ChangedOn);
+                db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, orderNumber.ChangedBy);
+                db.AddInParameter(cmd, "@Id", DbType.Int32, orderNumber.Id);
 
                 db.ExecuteNonQuery(cmd);
             }
@@ -81,7 +81,7 @@ namespace ASF.Data
         /// <param name="id"></param>
         public void DeleteById(int id)
         {
-            const string sqlStatement = "DELETE dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "DELETE dbo.OrderNumber WHERE [Id]=@Id ";
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -95,35 +95,35 @@ namespace ASF.Data
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Category SelectById(int id)
+        public OrderNumber SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Category WHERE [Id]=@Id ";
+            const string sqlStatement = "SELECT [Id], [Number], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM dbo.OrderNumber WHERE [Id]=@Id ";
 
-            Category category = null;
+            OrderNumber orderNumber = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
                 db.AddInParameter(cmd, "@Id", DbType.Int32, id);
                 using (var dr = db.ExecuteReader(cmd))
                 {
-                    if (dr.Read()) category = LoadCategory(dr);
+                    if (dr.Read()) orderNumber = LoadOrderNumber(dr);
                 }
             }
 
-            return category;
+            return orderNumber;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>		
-        public List<Category> Select()
+        public List<OrderNumber> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Category ";
+            const string sqlStatement = "SELECT [Id], [Number], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.OrderNumber ";
 
-            var result = new List<Category>();
+            var result = new List<OrderNumber>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
@@ -131,8 +131,8 @@ namespace ASF.Data
                 {
                     while (dr.Read())
                     {
-                        var category = LoadCategory(dr); // Mapper
-                        result.Add(category);
+                        var orderNumber = LoadOrderNumber(dr); // Mapper
+                        result.Add(orderNumber);
                     }
                 }
             }
@@ -140,18 +140,18 @@ namespace ASF.Data
             return result;
         }
         
-        private static Category LoadCategory(IDataReader dr)
+        private static OrderNumber LoadOrderNumber(IDataReader dr)
         {
-            var category = new Category
+            var orderNumber = new OrderNumber
             {
                 Id = GetDataValue<int>(dr, "Id"),
-                Name = GetDataValue<string>(dr, "Name"),
+                Number = GetDataValue<int>(dr, "Number"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
                 ChangedBy = GetDataValue<int>(dr, "ChangedBy")
             };
-            return category;
+            return orderNumber;
         }
     }
 }

@@ -35,15 +35,15 @@ namespace ASF.UI.Process
             var response = HttpPost<int>("rest/Category/Delete", id, MediaType.Json);
         }
 
-        public Category Add(Category categoria)
+        public Category Add(Category category)
         {
-            var response = HttpPost<Category>("rest/Category/Add", categoria);
+            var response = HttpPost<Category>("rest/Category/Add", category);
             return response;
         }
 
-        public void Edit(Category categoria)
+        public void Edit(Category category)
         {
-            var response = HttpPost<Category>("rest/Category/Edit", categoria);
+            var response = HttpPost<Category>("rest/Category/Edit", category);
         }
 
     }
