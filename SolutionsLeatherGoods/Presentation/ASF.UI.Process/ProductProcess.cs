@@ -23,7 +23,7 @@ namespace ASF.UI.Process
             var dic = new Dictionary<string, object>();
             dic.Add("pageNumber", pageNumber);
             dic.Add("pageSize", pageSize);
-            var response = HttpGet<AllResponse<Product>>("rest/Product/All", , MediaType.Json);
+            var response = HttpGet<AllResponse<Product>>("rest/Product/All", dic, MediaType.Json);
             return response.Result;
         }
 

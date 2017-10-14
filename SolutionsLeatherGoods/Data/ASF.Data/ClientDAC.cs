@@ -29,13 +29,22 @@ namespace ASF.Data
         /// <returns></returns>
         public Client Create(Client client)
         {
-            const string sqlStatement ="INSERT INTO dbo.Client ([Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@Name, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement = "INSERT INTO dbo.Client ([AspNetUsers], [City], [CountryId], [Email], [FirstName], " +
+                "[LastName], [OrderCount], [SignupDate], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
+                "VALUES(@AspNetUsers, @City, @CountryId, @Email, @FirstName, @LastName, @OrderCount, @SignupDate, " +
+                "@CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, client.Name);
+                db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
+                db.AddInParameter(cmd, "@City", DbType.String, client.City);
+                db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
+                db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
+                db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
+                db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
+                db.AddInParameter(cmd, "@OrderCount", DbType.Int32, client.OrderCount);
+                db.AddInParameter(cmd, "@SignupDate", DbType.DateTime, client.SignupDate);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
                 db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
@@ -54,7 +63,14 @@ namespace ASF.Data
         public void UpdateById(Client client)
         {
             const string sqlStatement = "UPDATE dbo.Client " +
-                "SET [Name]=@Name, " +
+                "SET [AspNetUsers]=@AspNetUsers, " +
+                    "[City]=@City, " +
+                    "[CountryId]=@CountryId, " +
+                    "[Email]=@Email, " +
+                    "[FirstName]=@FirstName, " +
+                    "[LastName]=@LastName, " +
+                    "[OrderCount]=@OrderCount, " +
+                    "[SignupDate]=@SignupDate, " +
                     "[CreatedOn]=@CreatedOn, " +
                     "[CreatedBy]=@CreatedBy, " +
                     "[ChangedOn]=@ChangedOn, " +
@@ -64,7 +80,14 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@Name", DbType.String, client.Name);
+                db.AddInParameter(cmd, "@AspNetUsers", DbType.String, client.AspNetUsers);
+                db.AddInParameter(cmd, "@City", DbType.String, client.City);
+                db.AddInParameter(cmd, "@CountryId", DbType.Int32, client.CountryId);
+                db.AddInParameter(cmd, "@Email", DbType.String, client.Email);
+                db.AddInParameter(cmd, "@FirstName", DbType.String, client.FirstName);
+                db.AddInParameter(cmd, "@LastName", DbType.String, client.LastName);
+                db.AddInParameter(cmd, "@OrderCount", DbType.Int32, client.OrderCount);
+                db.AddInParameter(cmd, "@SignupDate", DbType.DateTime, client.SignupDate);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, client.CreatedOn);
                 db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, client.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, client.ChangedOn);
@@ -97,7 +120,8 @@ namespace ASF.Data
         /// <returns></returns>
         public Client SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+            const string sqlStatement = "SELECT [AspNetUsers], [City], [CountryId], [Email], [FirstName], " +
+                "[LastName], [OrderCount], [SignupDate], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]" +
                 "FROM dbo.Client WHERE [Id]=@Id ";
 
             Client client = null;
@@ -121,7 +145,8 @@ namespace ASF.Data
         public List<Client> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [Name], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Client ";
+            const string sqlStatement = "SELECT [AspNetUsers], [City], [CountryId], [Email], [FirstName], " +
+                "[LastName], [OrderCount], [SignupDate], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Client ";
 
             var result = new List<Client>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
@@ -145,7 +170,14 @@ namespace ASF.Data
             var client = new Client
             {
                 Id = GetDataValue<int>(dr, "Id"),
-                Name = GetDataValue<string>(dr, "Name"),
+                AspNetUsers = GetDataValue<string>(dr, "AspNetUsers"),
+                City = GetDataValue<string>(dr, "City"),
+                CountryId = GetDataValue<int>(dr, "CountryId"),
+                Email = GetDataValue<string>(dr, "Email"),
+                FirstName = GetDataValue<string>(dr, "FirstName"),
+                LastName = GetDataValue<string>(dr, "LastName"),
+                OrderCount = GetDataValue<Int32>(dr, "OrderCount"),
+                SignupDate = GetDataValue<DateTime>(dr, "Rowid"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),
