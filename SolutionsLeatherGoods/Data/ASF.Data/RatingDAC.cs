@@ -49,6 +49,17 @@ namespace ASF.Data
             return rating;
         }
 
+        public void DeleteByProductId(int productId)
+        {
+            const string sqlStatement = "DELETE dbo.Rating WHERE [ProductId]=@ProductId ";
+            var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            {
+                db.AddInParameter(cmd, "@ProductId", DbType.Int32, productId);
+                db.ExecuteNonQuery(cmd);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

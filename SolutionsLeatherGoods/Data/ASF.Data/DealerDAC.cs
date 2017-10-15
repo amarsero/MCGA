@@ -41,9 +41,9 @@ namespace ASF.Data
            ,@CountryId
            ,@Description
            ,@TotalProducts
-           ,@CreatedOn,
-           ,@CreatedBy,
-           ,@ChangedOn,
+           ,@CreatedOn
+           ,@CreatedBy
+           ,@ChangedOn
            ,@ChangedBy)
 ; SELECT SCOPE_IDENTITY();";
 
@@ -55,7 +55,7 @@ namespace ASF.Data
                 db.AddInParameter(cmd, "@CategoryId", DbType.Int32, dealer.CategoryId);
                 db.AddInParameter(cmd, "@CountryId", DbType.Int32, dealer.CountryId);
                 db.AddInParameter(cmd, "@Description", DbType.String, dealer.Description);
-                db.AddInParameter(cmd, "@TotalProducts", DbType.Int32, dealer.TotalProducts);
+                db.AddInParameter(cmd, "@TotalProducts", DbType.Int32, 0);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
                 db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, dealer.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, DateTime.Now);
@@ -80,9 +80,9 @@ namespace ASF.Data
                 ,[CountryId] = @CountryId
                 ,[Description] = @Description
                 ,[TotalProducts] = @TotalProducts
-                ,[CreatedOn]=@CreatedOn,
-                ,[CreatedBy]=@CreatedBy,
-                ,[ChangedOn]=@ChangedOn, 
+                ,[CreatedOn]=@CreatedOn
+                ,[CreatedBy]=@CreatedBy
+                ,[ChangedOn]=@ChangedOn
                 ,[ChangedBy]=@ChangedBy 
                 WHERE [Id]=@Id ";
 

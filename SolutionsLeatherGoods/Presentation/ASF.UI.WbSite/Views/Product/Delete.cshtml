@@ -1,0 +1,80 @@
+﻿@model ASF.UI.WbSite.Controllers.ProductViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dealer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dealer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.QuantitySold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.QuantitySold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.AvgStars)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.AvgStars)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

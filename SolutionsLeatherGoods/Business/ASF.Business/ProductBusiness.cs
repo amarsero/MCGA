@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ASF.Entities;
 using ASF.Data;
+using System.Transactions;
 
 namespace ASF.Business
 {
@@ -18,8 +19,21 @@ namespace ASF.Business
         /// <returns></returns>
         public Product Add(Product product)
         {
-            var productDac = new ProductDac();
-            return productDac.Create(product);
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var productDac = new ProductDac();
+                DealerDac dd = new DealerDac();
+
+                Dealer dealer = dd.SelectById(product.DealerId);
+                dealer.TotalProducts++;
+                dd.UpdateById(dealer);
+
+                var pro = productDac.Create(product);
+
+                ts.Complete();
+
+                return pro;
+            }
         }
 
         /// <summary>
@@ -28,8 +42,22 @@ namespace ASF.Business
         /// <param name="id"></param>
         public void Remove(int id)
         {
-            var productDac = new ProductDac();
-            productDac.DeleteById(id);
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var productDac = new ProductDac();
+                DealerDac dd = new DealerDac();
+                var product = productDac.SelectById(id);
+                Dealer dealer = dd.SelectById(product.DealerId);
+
+                dealer.TotalProducts--;
+                dd.UpdateById(dealer);
+
+                var ratingDac = new RatingDac();
+                ratingDac.DeleteByProductId(id);
+                
+                productDac.DeleteById(id);
+                ts.Complete();
+            }
         }
 
         /// <summary>

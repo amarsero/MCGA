@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>958add8d</NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -266,6 +267,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -558,10 +560,19 @@
     <Content Include="Views\Dealer\Create.cshtml" />
     <Content Include="Views\Dealer\Edit.cshtml" />
     <Content Include="Views\Dealer\Delete.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
+    <Content Include="Views\Country\Details.cshtml" />
+    <Content Include="Views\Country\Create.cshtml" />
+    <Content Include="Views\Country\Edit.cshtml" />
+    <Content Include="Views\Country\Delete.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Product\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Country\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
@@ -573,6 +584,10 @@
     <ProjectReference Include="..\..\Shared\ASF.Entities\ASF.Entities.csproj">
       <Project>{5f7c08e8-891e-41c7-9e8d-e94b75222c0b}</Project>
       <Name>ASF.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\ASF.Framework\ASF.Framework.csproj">
+      <Project>{b07faacc-7f82-4fdb-9bbb-666711eef0f4}</Project>
+      <Name>ASF.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\ASF.UI.Process\ASF.UI.Process.csproj">
       <Project>{16102133-b8dc-4516-b714-c2802ecfa923}</Project>

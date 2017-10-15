@@ -1,0 +1,74 @@
+﻿@model ASF.UI.WbSite.Controllers.ProductViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dealer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dealer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.QuantitySold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.QuantitySold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product.AvgStars)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product.AvgStars)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.product.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

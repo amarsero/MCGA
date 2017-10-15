@@ -16,7 +16,8 @@ namespace ASF.UI.WbSite.Controllers
         // GET: Category
         public ActionResult Index()
         {
-            return View(DataCache.Instance.CategoryAll());
+            CategoryProcess cp = new CategoryProcess();
+            return View(cp.SelectList());
         }
 
         // GET: Category/Details/5

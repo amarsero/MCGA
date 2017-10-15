@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ASF.UI.WbSite.Controllers.ProductViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.product.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dealer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.QuantitySold)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.AvgStars)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dealer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.QuantitySold)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product.AvgStars)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.product.Id }) |
+            @Html.ActionLink("Details", "Details", new { id= item.product.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id= item.product.Id })
+        </td>
+    </tr>
+}
+
+</table>

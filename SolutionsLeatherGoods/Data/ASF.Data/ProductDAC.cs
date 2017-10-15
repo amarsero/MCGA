@@ -36,12 +36,12 @@ namespace ASF.Data
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
             {
-                db.AddInParameter(cmd, "@AvgStars", DbType.Decimal, product.AvgStars);
+                db.AddInParameter(cmd, "@AvgStars", DbType.Decimal, 0);
                 db.AddInParameter(cmd, "@DealerId", DbType.Int32, product.DealerId);
                 db.AddInParameter(cmd, "@Description", DbType.String, product.Description);
                 db.AddInParameter(cmd, "@Image", DbType.String, product.Image);
                 db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
-                db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, product.QuantitySold);
+                db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, 0);
                 db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
                 db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, DateTime.Now);
                 db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, product.CreatedBy);
@@ -61,8 +61,7 @@ namespace ASF.Data
         public void UpdateById(Product product)
         {
             const string sqlStatement = @"UPDATE dbo.Product 
-                SET [Name]=@Name,
-                    [AvgStars]=@AvgStars, 
+                SET [AvgStars]=@AvgStars, 
                     [DealerId]=@DealerId, 
                     [Description]=@Description, 
                     [Image]=@Image, 

@@ -14,13 +14,17 @@ namespace ASF.UI.WbSite.Controllers
         // GET: Country
         public ActionResult Index()
         {
-            return View();
+            CountryProcess countryProcess = new CountryProcess();
+
+            return View(countryProcess.SelectList());
         }
 
         // GET: Country/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            CountryProcess countryProcess = new CountryProcess();
+
+            return View(countryProcess.SelectOne(id));
         }
 
         // GET: Country/Create
@@ -35,7 +39,12 @@ namespace ASF.UI.WbSite.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                CountryProcess countryProcess = new CountryProcess();
+                Country country = new Country()
+                {
+                    Name = collection["Name"]
+                };
+                countryProcess.Add(country);            
 
                 return RedirectToAction("Index");
             }
@@ -48,7 +57,9 @@ namespace ASF.UI.WbSite.Controllers
         // GET: Country/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            CountryProcess countryProcess = new CountryProcess();
+
+            return View(countryProcess.SelectOne(id));
         }
 
         // POST: Country/Edit/5
@@ -57,7 +68,13 @@ namespace ASF.UI.WbSite.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                CountryProcess countryProcess = new CountryProcess();
+                Country country = new Country()
+                {
+                    Name = collection["Name"],
+                    Id = id
+                };
+                countryProcess.Edit(country);
 
                 return RedirectToAction("Index");
             }
@@ -70,7 +87,9 @@ namespace ASF.UI.WbSite.Controllers
         // GET: Country/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            CountryProcess countryProcess = new CountryProcess();
+
+            return View(countryProcess.SelectOne(id));
         }
 
         // POST: Country/Delete/5
@@ -79,7 +98,9 @@ namespace ASF.UI.WbSite.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+
+                CountryProcess countryProcess = new CountryProcess();
+                countryProcess.Delete(id);
 
                 return RedirectToAction("Index");
             }

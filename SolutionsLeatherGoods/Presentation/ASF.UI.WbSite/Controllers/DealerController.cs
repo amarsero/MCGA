@@ -68,8 +68,6 @@ namespace ASF.UI.WbSite.Controllers
             vm.country = coup.SelectOne(vm.dealer.CountryId).Name;
             
             return View(vm);
-
-
         }
 
         // GET: Dealer/Create
@@ -99,7 +97,6 @@ namespace ASF.UI.WbSite.Controllers
                 dealer.Description = collection["dealer[0].Description"];
                 dealer.FirstName = collection["dealer[0].FirstName"];
                 dealer.LastName = collection["dealer[0].LastName"];
-                dealer.TotalProducts = int.Parse(collection["dealer[0].TotalProducts"]);
 
                 dp.Add(dealer);
 
@@ -115,8 +112,13 @@ namespace ASF.UI.WbSite.Controllers
         public ActionResult Edit(int id)
         {
             DealerProcess dp = new DealerProcess();
-            
-            return View(dp.SelectOne(id));
+            CountryProcess coup = new CountryProcess();
+            CategoryProcess catp = new CategoryProcess();
+            DealerFullViewModel vm = new DealerFullViewModel();
+            vm.countries = coup.SelectList().Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            vm.categories = catp.SelectList().Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
+            return View(vm);
         }
 
         // POST: Dealer/Edit/5
@@ -128,12 +130,12 @@ namespace ASF.UI.WbSite.Controllers
                 DealerProcess dp = new DealerProcess();
                 Dealer dealer = new Dealer();
 
-                dealer.CountryId = int.Parse(collection["CountryId"]);
-                dealer.CategoryId = int.Parse(collection["CategoryId"]);
-                dealer.Description = collection["Description"];
-                dealer.FirstName = collection["FirstName"];
-                dealer.LastName = collection["LastName"];
-                dealer.TotalProducts = int.Parse(collection["TotalProducts"]);
+                dealer.CountryId = int.Parse(collection["dealer[0].CountryId"]);
+                dealer.CategoryId = int.Parse(collection["dealer[0].CategoryId"]);
+                dealer.Description = collection["dealer[0].Description"];
+                dealer.FirstName = collection["dealer[0].FirstName"];
+                dealer.LastName = collection["dealer[0].LastName"];
+                dealer.TotalProducts = dp.SelectOne(id).TotalProducts;
                 dealer.Id = id;
 
                 dp.Edit(dealer);
