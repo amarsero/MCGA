@@ -112,6 +112,29 @@ namespace ASF.Services.Http
         }
 
         [HttpGet]
+        [Route("FindByASPNET/{aspnetId}")]
+        public FindResponse<Client> FindByASPNET(string aspnetId)
+        {
+            try
+            {
+                FindResponse<Client> response = new FindResponse<Client>();
+                var bc = new ClientBusiness();
+                response.Result = bc.FindByAspnetId(aspnetId);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }        
+
+        [HttpGet]
         [Route("Remove/{id}")]
         public void Remove(int id)
         {

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ASF.UI.WbSite.Controllers.CartItemViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Cart</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            Precio Total
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            $@(item.Price * item.Quantity)
+        </td>
+        <td>
+            @Html.ActionLink("Detail", "Detail", "Showroom", new { id = item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+}
+</table>
+
+
+@{double tot = 0; foreach (var item in Model) { tot = item.Quantity * item.Price; }
+        <p>Total: @tot</p> }
+<a href="@Url.Action("Create", "Order")" class="btn btn-primary">Checkout</a>
+
+

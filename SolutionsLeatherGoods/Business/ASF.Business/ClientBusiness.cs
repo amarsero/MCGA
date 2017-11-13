@@ -72,5 +72,12 @@ namespace ASF.Business
             var clientDac = new ClientDac();
             clientDac.UpdateById(client);
         }
+
+        public Client FindByAspnetId(string aspnetId)
+        {
+                var clientDac = new ClientDac();
+                var result = clientDac.SelectByAspnetId(aspnetId);
+                return result;
+        }
     }
 }

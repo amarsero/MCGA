@@ -29,8 +29,28 @@ namespace ASF.Data
         /// <returns></returns>
         public Order Create(Order order)
         {
-            const string sqlStatement = "INSERT INTO dbo.Order ([ClientId], [ItemCount], [OrderDate], [OrderNumber], [State], [TotalPrice], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]) " +
-                "VALUES(@ClientId, @ItemCount, @OrderDate, @OrderNumber, @State, @TotalPrice, @CreatedOn, @CreatedBy, @ChangedOn, @ChangedBy); SELECT SCOPE_IDENTITY();";
+            const string sqlStatement = @"INSERT INTO [dbo].[Order]
+           ([ClientId]
+           ,[OrderDate]
+           ,[TotalPrice]
+           ,[State]
+           ,[OrderNumber]
+           ,[ItemCount]
+           ,[CreatedOn]
+           ,[CreatedBy]
+           ,[ChangedOn]
+           ,[ChangedBy])
+     VALUES
+           (@ClientId
+           ,@OrderDate
+           ,@TotalPrice
+           ,@State
+           ,@OrderNumber
+           ,@ItemCount
+           ,@CreatedOn
+           ,@CreatedBy
+           ,@ChangedOn
+           ,@ChangedBy); SELECT SCOPE_IDENTITY();";
 
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
             using (var cmd = db.GetSqlStringCommand(sqlStatement))
@@ -58,7 +78,7 @@ namespace ASF.Data
         /// <param name="order"></param>
         public void UpdateById(Order order)
         {
-            const string sqlStatement = "UPDATE dbo.Order " +
+            const string sqlStatement = "UPDATE [dbo].[Order] " +
                 "SET [OrderDate]=@OrderDate, " +
                     "[ClientId]=@ClientId, " +
                     "[ItemCount]=@ItemCount, " +
@@ -112,8 +132,18 @@ namespace ASF.Data
         /// <returns></returns>
         public Order SelectById(int id)
         {
-            const string sqlStatement = "SELECT [Id], [ClientId], [ItemCount], [OrderDate], [OrderNumber], [State], [TotalPrice],  [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
-                "FROM dbo.Order WHERE [Id]=@Id ";
+            const string sqlStatement = @"SELECT [Id]
+      ,[ClientId]
+      ,[OrderDate]
+      ,[TotalPrice]
+      ,[State]
+      ,[OrderNumber]
+      ,[ItemCount]
+      ,[CreatedOn]
+      ,[CreatedBy]
+      ,[ChangedOn]
+      ,[ChangedBy]
+  FROM[dbo].[Order]";
 
             Order order = null;
             var db = DatabaseFactory.CreateDatabase(ConnectionName);
@@ -129,6 +159,29 @@ namespace ASF.Data
             return order;
         }
 
+        public List<Order> SelectByClientId(int id)
+        {
+            const string sqlStatement = "SELECT [Id], [ClientId], [ItemCount], [OrderDate], [OrderNumber], [State], [TotalPrice],  [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM [dbo].[Order] WHERE [ClientId]=@Id";
+
+
+            var result = new List<Order>();
+            var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            {
+                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+                using (var dr = db.ExecuteReader(cmd))
+                {
+                    while (dr.Read())
+                    {
+                        var order = LoadOrder(dr); // Mapper
+                        result.Add(order);
+                    }
+                }
+            }
+
+            return result;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -136,7 +189,7 @@ namespace ASF.Data
         public List<Order> Select()
         {
             // WARNING! Performance
-            const string sqlStatement = "SELECT [Id], [ClientId], [ItemCount], [OrderDate], [OrderNumber], [State], [TotalPrice], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.Order ";
+            const string sqlStatement = "SELECT [Id], [ClientId], [ItemCount], [OrderDate], [OrderNumber], [State], [TotalPrice], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM [dbo].[Order] ";
 
             var result = new List<Order>();
             var db = DatabaseFactory.CreateDatabase(ConnectionName);

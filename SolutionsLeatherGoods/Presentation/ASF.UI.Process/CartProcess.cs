@@ -30,9 +30,15 @@ namespace ASF.UI.Process
             return response.Result;
         }
 
+        public Cart SelectOne(string cookie)
+        {
+            var response = HttpGet<FindResponse<Cart>>("rest/Cart/FindByCookie", new List<object> { cookie }, MediaType.Json);
+            return response.Result;
+        }
+
         public void Delete(int id)
         {
-            var response = HttpPost<int>("rest/Cart/Delete", id, MediaType.Json);
+            var response = HttpPost<int>("rest/Cart/Remove", id, MediaType.Json);
         }
 
         public Cart Add(Cart cart)

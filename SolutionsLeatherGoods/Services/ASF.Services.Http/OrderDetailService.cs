@@ -112,6 +112,29 @@ namespace ASF.Services.Http
         }
 
         [HttpGet]
+        [Route("FindByOrderId/{id}")]
+        public AllResponse<OrderDetail> FindByOrderId(int id)
+        {
+            try
+            {
+                AllResponse<OrderDetail> response = new AllResponse<OrderDetail>();
+                var bc = new OrderDetailBusiness();
+                response.Result = bc.FindByOrderId(id);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }
+
+        [HttpGet]
         [Route("Remove/{id}")]
         public void Remove(int id)
         {

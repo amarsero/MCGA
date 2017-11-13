@@ -49,6 +49,25 @@ namespace ASF.Data
             return cart;
         }
 
+        public Cart SelectByCookie(string cookie)
+        {
+            const string sqlStatement = "SELECT [Id], [CartDate], [Cookie], [ItemCount], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] " +
+                "FROM dbo.Cart WHERE [Cookie]=@Cookie ";
+
+            Cart cart = null;
+            var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            {
+                db.AddInParameter(cmd, "@Cookie", DbType.String, cookie);
+                using (var dr = db.ExecuteReader(cmd))
+                {
+                    if (dr.Read()) cart = LoadCart(dr);
+                }
+            }
+
+            return cart;
+        }
+
         /// <summary>
         /// 
         /// </summary>

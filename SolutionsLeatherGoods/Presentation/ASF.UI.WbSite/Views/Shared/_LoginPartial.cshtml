@@ -12,6 +12,10 @@
             <li>
                 @Html.ActionLink("LogOff ", "LogOff", "Account", new { Area = "" }, htmlAttributes: new { title = "LogOff" })
             </li>
+            <li>
+                <a href="@Url.Action("Index","Cart")" class="fa fa-shopping-cart">
+                </a>
+            </li>
         </ul>
     }
 }
@@ -20,5 +24,6 @@ else
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", new { area = "" }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
+
     </ul>
 }

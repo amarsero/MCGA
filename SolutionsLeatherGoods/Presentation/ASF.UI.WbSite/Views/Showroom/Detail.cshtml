@@ -1,0 +1,38 @@
+﻿@model ASF.Entities.Product
+
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>@Model.Title</h2>
+<div>
+    <div class="showroom-detalle-detalles">
+
+        <p>
+            @Html.DisplayFor(model => model.Description)
+        </p>
+
+
+        <p>
+            Cantidad vendida: @Model.QuantitySold
+        </p>
+
+        <p>
+            Estrellas: @Model.AvgStars
+        </p>
+
+        <p>
+            Califica este producto:
+        </p>
+
+
+        <p>
+            Precio: $@Html.DisplayFor(model => model.Price) <a href="@Url.Action("Add", "Cart", new { id = Model.Id})" class="btn btn-primary">Comprar!</a>
+        </p>
+
+    </div>
+    <img class="showroom-detalle-imagen" src="@Url.Content("/Imagenes/" + Model.Image)" />
+</div>
+<p class="float-clear">
+    @Html.ActionLink("Volver a Productos", "Index")
+</p>

@@ -27,6 +27,15 @@ namespace ASF.Business
         public OrderDetail Add(OrderDetail orderDetail)
         {
             var orderDetailDac = new OrderDetailDac();
+            var orderDac = new OrderDac();
+
+            Order order = orderDac.SelectById(orderDetail.OrderId);
+
+            order.TotalPrice += orderDetail.Price * orderDetail.Quantity;
+            order.ItemCount += 1;
+
+            orderDac.UpdateById(order);
+
             return orderDetailDac.Create(orderDetail);
         }
 
@@ -60,6 +69,13 @@ namespace ASF.Business
         {
             var orderDetailDac = new OrderDetailDac();
             var result = orderDetailDac.SelectById(id);
+            return result;
+        }
+
+        public List<OrderDetail> FindByOrderId(int id)
+        {
+            var orderDetailDac = new OrderDetailDac();
+            var result = orderDetailDac.SelectByOrderId(id);
             return result;
         }
 

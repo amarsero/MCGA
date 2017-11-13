@@ -55,6 +55,13 @@ namespace ASF.Business
             return result;
         }
 
+        public Cart FindByCookie(string cookie)
+        {
+            var cartDac = new CartDac();
+            var result = cartDac.SelectByCookie(cookie);
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>

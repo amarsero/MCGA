@@ -123,7 +123,9 @@ namespace ASF.UI.WbSite.Controllers
                     Id = id,
                     Image = collection["product.Image"],
                     Price = double.Parse(collection["product.Price"]),
-                    Title = collection["product.Title"]
+                    Title = collection["product.Title"],
+                    ChangedBy = 1,
+                    ChangedOn = DateTime.Now
                 };
 
                 pp.Edit(product);

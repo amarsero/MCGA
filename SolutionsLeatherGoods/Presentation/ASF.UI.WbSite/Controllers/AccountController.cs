@@ -140,6 +140,9 @@ namespace ASF.UI.WbSite.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            Process.CountryProcess coup = new Process.CountryProcess();
+            ViewBag.Countries = coup.SelectList().Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
             return View();
         }
 
@@ -152,18 +155,34 @@ namespace ASF.UI.WbSite.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    Process.ClientProcess cp = new Process.ClientProcess();
+                    Entities.Client client = new Entities.Client()
+                    {
+                        AspNetUsers = user.Id,
+                        ChangedOn = DateTime.Now,
+                        City = model.City,
+                        CountryId = model.CountryId,
+                        CreatedOn = DateTime.Now,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        OrderCount = 0,
+                        SignupDate = DateTime.Now
+                    };
+                    cp.Add(client);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

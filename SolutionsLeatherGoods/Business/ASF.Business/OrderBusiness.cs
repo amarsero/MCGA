@@ -27,7 +27,8 @@ namespace ASF.Business
         public Order Add(Order order)
         {
             var orderDac = new OrderDac();
-            return orderDac.Create(order);
+            Order ord = orderDac.Create(order);
+            return ord;
         }
 
         /// <summary>
@@ -62,6 +63,13 @@ namespace ASF.Business
             var result = orderDac.SelectById(id);
             return result;
         }
+        public List<Order> FindByClientId(int id)
+        {
+            var orderDac = new OrderDac();
+            var result = orderDac.SelectByClientId(id);
+            return result;
+        }
+
 
         /// <summary>
         /// 

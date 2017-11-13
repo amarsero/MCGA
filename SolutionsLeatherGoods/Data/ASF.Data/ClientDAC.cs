@@ -138,6 +138,36 @@ namespace ASF.Data
             return client;
         }
 
+        public Client SelectByAspnetId(string aspnetId)
+        {
+            const string sqlStatement = "SELECT [Id], [AspNetUsers], [City], [CountryId], [Email], [FirstName], " +
+                "[LastName], [OrderCount], [SignupDate], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy]" +
+                "FROM dbo.Client WHERE [AspNetUsers]=@AspNetUsers ";
+
+            Client client = null;
+            var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            try
+            {
+
+            using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            {
+                db.AddInParameter(cmd, "@AspNetUsers", DbType.String, aspnetId);
+                using (var dr = db.ExecuteReader(cmd))
+                {
+                    if (dr.Read()) client = LoadClient(dr);
+                }
+            }
+
+            return client;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -177,7 +207,7 @@ namespace ASF.Data
                 FirstName = GetDataValue<string>(dr, "FirstName"),
                 LastName = GetDataValue<string>(dr, "LastName"),
                 OrderCount = GetDataValue<Int32>(dr, "OrderCount"),
-                SignupDate = GetDataValue<DateTime>(dr, "Rowid"),
+                SignupDate = GetDataValue<DateTime>(dr, "SignupDate"),
                 CreatedOn = GetDataValue<DateTime>(dr, "CreatedOn"),
                 CreatedBy = GetDataValue<int>(dr, "CreatedBy"),
                 ChangedOn = GetDataValue<DateTime>(dr, "ChangedOn"),

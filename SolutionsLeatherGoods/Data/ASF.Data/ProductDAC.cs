@@ -67,9 +67,7 @@ namespace ASF.Data
                     [Image]=@Image, 
                     [Price]=@Price, 
                     [QuantitySold]=@QuantitySold, 
-                    [Title]=@Title, 
-                    [CreatedOn]=@CreatedOn, 
-                    [CreatedBy]=@CreatedBy, 
+                    [Title]=@Title,
                     [ChangedOn]=@ChangedOn, 
                     [ChangedBy]=@ChangedBy 
                 WHERE [Id]=@Id ";
@@ -84,8 +82,6 @@ namespace ASF.Data
                 db.AddInParameter(cmd, "@Price", DbType.Decimal, product.Price);
                 db.AddInParameter(cmd, "@QuantitySold", DbType.Int32, product.QuantitySold);
                 db.AddInParameter(cmd, "@Title", DbType.String, product.Title);
-                db.AddInParameter(cmd, "@CreatedOn", DbType.DateTime2, product.CreatedOn);
-                db.AddInParameter(cmd, "@CreatedBy", DbType.Int32, product.CreatedBy);
                 db.AddInParameter(cmd, "@ChangedOn", DbType.DateTime2, product.ChangedOn);
                 db.AddInParameter(cmd, "@ChangedBy", DbType.Int32, product.ChangedBy);
                 db.AddInParameter(cmd, "@Id", DbType.Int32, product.Id);

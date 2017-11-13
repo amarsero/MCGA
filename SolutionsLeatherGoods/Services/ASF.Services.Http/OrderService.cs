@@ -30,7 +30,8 @@ namespace ASF.Services.Http
             try
             {
                 var bc = new OrderBusiness();
-                return bc.Add(order);
+                Order ord = bc.Add(order);
+                return ord;
             }
             catch (Exception ex)
             {
@@ -97,6 +98,29 @@ namespace ASF.Services.Http
                 FindResponse<Order> response = new FindResponse<Order>();
                 var bc = new OrderBusiness();
                 response.Result = bc.Find(id);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var httpError = new HttpResponseMessage()
+                {
+                    StatusCode = (HttpStatusCode)422,
+                    ReasonPhrase = ex.Message
+                };
+
+                throw new HttpResponseException(httpError);
+            }
+        }
+
+        [HttpGet]
+        [Route("FindByClientId/{id}")]
+        public AllResponse<Order> FindByClientId(int id)
+        {
+            try
+            {
+                AllResponse<Order> response = new AllResponse<Order>();
+                var bc = new OrderBusiness();
+                response.Result = bc.FindByClientId(id);
                 return response;
             }
             catch (Exception ex)

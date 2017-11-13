@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ASF.Entities.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="titulo">Productos</h2>
+<ul class="showroom-producto-list">
+    @if (Model != null)
+    {
+        foreach (var x in Model)
+        {
+            <li class="showroom-producto">
+                <div class="showroom-producto-container">
+                    <div class="showroom-producto-content">
+                        <h3>@x.Title</h3>
+                        <img src="@Url.Content("/Imagenes/" + x.Image)" />
+                    </div>
+
+                    <p>@x.Description</p>
+                    <div class="showroom-producto-footer">
+                        <span class="showroom-producto-precio">$ @x.Price</span> 
+                        <a href="@Url.Action("Detail", "Showroom", new { id = x.Id})" class="btn btn-default showroom-producto-boton-comprar">Ver</a>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+</ul>

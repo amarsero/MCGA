@@ -94,7 +94,8 @@ namespace ASF.UI.Process
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
                 var response = client.PostAsJsonAsync(pathAndQuery, value).Result;
                 response.EnsureSuccessStatusCode();
-                return value;
+
+                return response.Content.ReadAsAsync<T>().Result;
 
             }
 

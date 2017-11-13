@@ -79,6 +79,23 @@ namespace ASF.UI.WbSite.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Contry")]
+        public int CountryId { get; set; }
+        
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

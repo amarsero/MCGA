@@ -30,6 +30,12 @@ namespace ASF.UI.Process
             return response.Result;
         }
 
+        public Client SelectByAspNetId(string aspnetId)
+        {
+            var response = HttpGet<FindResponse<Client>>("rest/Client/FindByASPNET", new List<object> { aspnetId }, MediaType.Json);
+            return response.Result;
+        }
+
         public void Delete(int id)
         {
             var response = HttpPost<int>("rest/Client/Delete", id, MediaType.Json);

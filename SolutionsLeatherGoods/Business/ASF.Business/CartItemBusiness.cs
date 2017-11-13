@@ -27,7 +27,19 @@ namespace ASF.Business
         public CartItem Add(CartItem cartItem)
         {
             var cartItemDac = new CartItemDac();
-            return cartItemDac.Create(cartItem);
+            var cartDac = new CartDac();
+
+            List<CartItem> cart = cartItemDac.SelectByCartId(cartItem.CartId);
+            CartItem search = cart.Find(x => x.ProductId == cartItem.ProductId);
+            if (search == default(CartItem))
+            {
+                return cartItemDac.Create(cartItem);
+            }
+
+            search.Quantity = search.Quantity + cartItem.Quantity;
+            search.Price = cartItem.Price;
+
+            return search;
         }
 
         /// <summary>
@@ -71,6 +83,13 @@ namespace ASF.Business
         {
             var cartItemDac = new CartItemDac();
             cartItemDac.UpdateById(cartItem);
+        }
+
+        public List<CartItem> AllByCart(int cartId)
+        {
+            var cartItemDac = new CartItemDac();
+            var result = cartItemDac.SelectByCartId(cartId);
+            return result;
         }
     }
 }

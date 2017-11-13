@@ -30,6 +30,12 @@ namespace ASF.UI.Process
             return response.Result;
         }
 
+        public List<Order> SelectByClientId(int id)
+        {
+            var response = HttpGet<AllResponse<Order>>("rest/Order/FindByClientId", new List<object> { id }, MediaType.Json);
+            return response.Result;
+        }
+
         public void Delete(int id)
         {
             var response = HttpPost<int>("rest/Order/Delete", id, MediaType.Json);

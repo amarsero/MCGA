@@ -30,9 +30,15 @@ namespace ASF.UI.Process
             return response.Result;
         }
 
+        public List<CartItem> SelectByCard(int cartid)
+        {
+            var response = HttpGet<AllResponse<CartItem>>("rest/CartItem/AllByCart", new List<object> { cartid }, MediaType.Json);
+            return response.Result;
+        }
+
         public void Delete(int id)
         {
-            var response = HttpPost<int>("rest/CartItem/Delete", id, MediaType.Json);
+            var response = HttpPost<int>("rest/CartItem/Remove/" + id, id, MediaType.Json);
         }
 
         public CartItem Add(CartItem cartItem)

@@ -50,6 +50,30 @@ namespace ASF.Data
             return cartItem;
         }
 
+        public List<CartItem> SelectByCartId(int cartId)
+        {
+            const string sqlStatement = "SELECT [Id], [CartId], [Price], [ProductId], [Quantity], [CreatedOn], [CreatedBy], [ChangedOn], [ChangedBy] FROM dbo.CartItem " +
+                "WHERE CartId=@CartId";
+
+            var result = new List<CartItem>();
+            var db = DatabaseFactory.CreateDatabase(ConnectionName);
+            using (var cmd = db.GetSqlStringCommand(sqlStatement))
+            {
+
+                db.AddInParameter(cmd, "@CartId", DbType.Int32, cartId);
+                using (var dr = db.ExecuteReader(cmd))
+                {
+                    while (dr.Read())
+                    {
+                        var cartItem = LoadCartItem(dr); // Mapper
+                        result.Add(cartItem);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>
