@@ -416,6 +416,8 @@
     <None Include="NWebsecConfig\HttpHeaderSecurityModuleConfig.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="ReadMe.html" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Content\bootstrap\site.css">
@@ -454,6 +456,9 @@
     <Content Include="Content\icons\favicon-192x192.png" />
     <Content Include="Content\icons\favicon-32x32.png" />
     <Content Include="Content\icons\favicon-96x96.png" />
+    <Content Include="Content\iecss.css" />
+    <Content Include="Content\Social.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\icons\mstile-144x144.png" />
     <Content Include="Content\icons\mstile-150x150.png" />
@@ -580,6 +585,7 @@
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Detail.cshtml" />
+    <Content Include="Views\Home\Index - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

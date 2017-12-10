@@ -5,7 +5,7 @@
     width: 100%;
     list-style-type: none;
 }
-
+ 
 .showroom-producto {
     width: 29%;
     background-color: lightblue;
@@ -19,8 +19,15 @@
     flex-basis: 29%;
 }
 
+.sombreadillo {
+    width: 0px;
+    height: 0px;
+    font-size: 0px;
+}
+
 .showroom-producto-content {
     height: 80%
+    
 }
 
 .showroom-producto-precio {

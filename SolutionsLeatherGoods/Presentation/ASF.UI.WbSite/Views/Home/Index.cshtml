@@ -4,6 +4,7 @@
     // title - The title of the page which appears in the browser window title. Aim for the title to be less than 70
     //         characters. The site name appears at the end for better SEO.
     ViewBag.Title = "Home";
+    <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
     // Description - Used by search engines. Aim for more than 160 characters.
     ViewBag.Description = "La meta descripción es una etiqueta importante para el SEO, y no porque sirva de ayuda en los rankings. Lo cierto es que no afecta para nada a la posición de tus páginas de los resultados del buscador....";
     // Author - (Optional) Used by search engines. The author of the page.
@@ -11,146 +12,26 @@
     // Referrer - (Optional) Controls what is sent in the HTTP referrer header when a client navigates from your page
     //            to an external site for increased user privacy and security. See ReferrerMode for more information.
     ViewBag.ReferrerMode = ReferrerMode.OriginWhenCrossOrigin;
+    
 
-    // Add Twitter Card and Open Graph social meta tags so we can customize what happens when our page is shared
-    // on these social networks. Note that other social networks like Google+, Pintrest and others also use these.
-    // There are dozens of different Twitter Card or Open Graph object types we could add, a different one is added
-    // on each page as an example.
-    // These helpers make it very easy to add the meta tags. For best performance, see what tags are generated and
-    // hand code them yourself instead of using these helpers.
-    ViewBag.TwitterCard = new SummaryLargeImageTwitterCard("@VContrerasAR");
-    ViewBag.OpenGraph = new OpenGraphWebsite(
-        ViewBag.Title,
-        new OpenGraphImage(Url.AbsoluteContent("~/content/icons/open-graph-1200x630.png")) { Height = 630, Type = ContentType.Png, Width = 1200 })
-    {
-        Determiner = OpenGraphDeterminer.Blank,
-        SiteName = Application.Name
-    };
 }
 
 <header class="jumbotron">
-    <h1>@ViewBag.Title</h1>
-    <p class="lead">@ViewBag.Description</p>
-    <p><a href="https://github.com/ASP-NET-Core-Boilerplate/Templates" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</header>
+    <h1>Bienvenidos a la zapatería de Pepe</h1>
+    <h2 class="lead">Es la mejor zapatería de la vecindad</h2>
+    <img alt="imagen de un zapato" src="/Imagenes/running-shoe-with-wings-hi.png"/>
+        </header>
+<h1>Pepe mejor Zapatería de almagro</h1>
+<h2>Tenemos un gran historial en marca y crea orificios en cuero. Por último, abrillanta y pule los zapatos aplicándoles betún y cepillándolos antes de entregarlos al cliente.</h2>
 
 <div class="row">
-    <article><a href="/Showroom/Index"><h3>Productos</h3></a></article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-book"></span> Getting started</h2>
-        </header>
-        <p>
-            <a href="http://go.microsoft.com/fwlink/?LinkId=301870">ASP.NET Web API</a> is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.
-        </p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-dropbox"></span> Get more libraries</h2>
-        </header>
-        <p><a href="http://go.microsoft.com/fwlink/?LinkId=301871">NuGet</a> is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-cloud"></span> Web Hosting</h2>
-        </header>
-        <p>You can easily find a <a href="http://go.microsoft.com/fwlink/?LinkId=301872">web hosting</a> company that offers the right mix of features and price for your applications.</p>
-    </article>
-</div>
+    <article><p class="sombreadillo">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum. Esta confección de tela de distintos materiales (algodón, mezclilla, poliéster, pana, etc.) tiene tres aberturas; una de ellas se ajusta a la cintura y las otras dos en cada una de las piernas. El pantalón pueden ser largo, en cuyo caso las bocas de las piernas llegan a la altura de los tobillos o incluso más abajo, o puede ser corto en distintas graduaciones, que van desde la pantorrilla (piratas) hasta la rodilla (pantaloneta) o la ingle (mini-cortos). Cuando la largura llega a media pantorrilla se denominan pantalones Capri.
 
-<div class="row">
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-mobile"></span> Bootstrap</h2>
-        </header>
-        <p><a href="http://getbootstrap.com/getting-started/">Bootstrap</a> is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web and is used for theming this site.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-flag"></span> Font Awesome</h2>
-        </header>
-        <p><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> gives you scalable vector icons that can instantly be customized — size, colour, drop shadow, and anything that can be done with the power of CSS.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-check"></span> Modernizr</h2>
-        </header>
-        <p><a href="http://modernizr.com/">Modernizr</a> is a JavaScript library that detects HTML5 and CSS3 features in the user's browser.</p>
-    </article>
-</div>
+Esta vestimenta es usada tanto por varones como por mujeres, y suele tener también accesorios tales como bolsillos para guardar elementos personales, cremallera (bragueta en el caso de los varones), para poder vestir más fácilmente aquellos de materiales menos flexibles, y pasacintos, para poder sostener aquellos que sean holgados de cintura.
 
-<div class="row">
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-lock"></span> NWebsec</h2>
-        </header>
-        <p><a href="https://github.com/NWebsec/NWebsec">NWebsec</a> makes securing your ASP.NET MVC site easy with a handful of simple attributes you can add to your global filters, controllers or actions.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-life-ring"></span> Elmah</h2>
-        </header>
-        <p><a href="https://code.google.com/p/elmah/wiki/MVC">ELMAH</a> (Error Logging Modules and Handlers) is an application-wide error logging facility that is completely pluggable.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-line-chart"></span> Glimpse</h2>
-        </header>
-        <p><a href="http://getglimpse.com/">Glimpse</a> makes debugging and performance testing easier by providing real time diagnostics & insights.</p>
-    </article>
-</div>
-
-<div class="row">
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-link"></span> Autofac</h2>
-        </header>
-        <p><a href="http://autofac.org/">Autofac</a> is an addictive <a href="http://martinfowler.com/articles/injection.html">inversion of control</a> container. The idea behind inversion of control is that, rather than tie the classes in your application together and let classes "new up" their dependencies, you switch it around so dependencies are instead passed in during class construction.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-wifi"></span> jQuery</h2>
-        </header>
-        <p><a href="http://jquery.com/">jQuery</a> is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.</p>
-    </article>
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-html5"></span> HTML5</h2>
-        </header>
-        <p><a href="http://en.wikipedia.org/wiki/HTML5">HTML5</a> is a core technology markup language of the Internet used for structuring and presenting content for the World Wide Web.</p>
-    </article>
-</div>
-
-<div class="row">
-    <article class="col-md-4" role="article">
-        <header>
-            <h2><span aria-hidden="true" class="fa fa-link"></span> ASP.NET MVC Boilerplate</h2>
-        </header>
-        <p>Find out more about how the <a href="http://rehansaeed.com/ASP-NET-Core-Boilerplate/">ASP.NET MVC Boilerplate</a> project template was put together and what features it includes out of the box. Read the <a href="https://github.com/ASP-NET-Core-Boilerplate/Templates/blob/master/RELEASE%20NOTES.md">release notes</a> to find out what updates are made to the project template and see the <a href="https://github.com/ASP-NET-Core-Boilerplate/Templates/blob/master/TODO.md">To-Do list</a> to view a list of features that will be added in the future.</p>
-    </article>
-    <article class="col-md-4">
-        <h2><span aria-hidden="true" class="fa fa-file-o"></span> This App Contains</h2>
-        <ul>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetIndex)"><strong>@Url.RouteUrl(HomeControllerRoute.GetIndex)</strong></a> - This index page.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetAbout)"><strong>@Url.RouteUrl(HomeControllerRoute.GetAbout)</strong></a> - An about us page.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetContact)"><strong>@Url.RouteUrl(HomeControllerRoute.GetContact)</strong></a> - A contact us page.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetFeed)"><strong>@Url.RouteUrl(HomeControllerRoute.GetFeed)</strong></a> - An <a href="https://en.wikipedia.org/wiki/Atom_%28standard%29">Atom 1.0</a> feed.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetRobotsText).TrimEnd('/')"><strong>@Url.RouteUrl(HomeControllerRoute.GetRobotsText).TrimEnd('/')</strong></a> - <a href="http://en.wikipedia.org/wiki/Robots_exclusion_standard">Robots text</a>.</li>
-            <li><a href="~/humans.txt"><strong>/humans.txt</strong></a> - <a href="http://humanstxt.org">Humans text</a>.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetSitemapXml).TrimEnd('/')"><strong>@Url.RouteUrl(HomeControllerRoute.GetSitemapXml).TrimEnd('/')</strong></a> - <a href="http://www.sitemaps.org/protocol.html">Site-map XML</a>.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetOpenSearchXml).TrimEnd('/')"><strong>@Url.RouteUrl(HomeControllerRoute.GetOpenSearchXml).TrimEnd('/')</strong></a> - <a href="http://www.hanselman.com/blog/CommentView.aspx?guid=50cc95b1-c043-451f-9bc2-696dc564766d#commentstart">Open search XML</a>.</li>
-            <li><a href="/@ConfigurationManager.AppSettings["elmah.mvc.route"]"><strong>/@ConfigurationManager.AppSettings["elmah.mvc.route"]</strong></a> - <a href="https://code.google.com/p/elmah/">Elmah</a> error logs.</li>
-            <li><a href="/glimpse.axd"><strong>/glimpse.axd</strong></a> - <a href="http://getglimpse.com">Glimpse</a> settings (Debug Only).</li>
-            <li><a href="/trace.axd"><strong>/trace.axd</strong></a> - Site <a href="https://msdn.microsoft.com/en-us/library/bb386420%28v=vs.140%29.aspx">trace</a> (Debug Only).</li>
-            <li><a href="@Url.RouteUrl(ErrorControllerRoute.GetBadRequest)"><strong>@Url.RouteUrl(ErrorControllerRoute.GetBadRequest)</strong></a> - <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error">400</a> error.</li>
-            <li><a href="@Url.RouteUrl(ErrorControllerRoute.GetForbidden)"><strong>@Url.RouteUrl(ErrorControllerRoute.GetForbidden)</strong></a> - <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error">403</a> error.</li>
-            <li><a href="@Url.RouteUrl(ErrorControllerRoute.GetInternalServerError)"><strong>@Url.RouteUrl(ErrorControllerRoute.GetInternalServerError)</strong></a> - <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error">500</a> error.</li>
-            <li><a href="@Url.RouteUrl(ErrorControllerRoute.GetNotFound)"><strong>@Url.RouteUrl(ErrorControllerRoute.GetNotFound)</strong></a> - <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error">404</a> error.</li>
-            <li><a href="@Url.RouteUrl(ErrorControllerRoute.GetUnauthorized)"><strong>@Url.RouteUrl(ErrorControllerRoute.GetUnauthorized)</strong></a> - <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error">401</a> error.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetBrowserConfigXml).TrimEnd('/')"><strong>@Url.RouteUrl(HomeControllerRoute.GetBrowserConfigXml).TrimEnd('/')</strong></a> - <a href="http://www.buildmypinnedsite.com">Windows 8.1/10 Icons</a>.</li>
-            <li><a href="@Url.RouteUrl(HomeControllerRoute.GetManifestJson).TrimEnd('/')"><strong>@Url.RouteUrl(HomeControllerRoute.GetManifestJson).TrimEnd('/')</strong></a> - <a href="https://developer.chrome.com/multidevice/android/installtohomescreen">Android/Chrome Icons</a>.</li>
-        </ul>
-    </article>
-</div>
+La palabra pantalón procede de Pantaleón, arquetipo literario del burgués del siglo XVII propio de la comedia del arte italiana y que vestía una prenda de este tipo
+                 Muchas son las supersticiones que han rodeado a lo largo de la historia a las rapaces nocturnas, quedando reflejadas en mitos y en leyendas que han llegado hasta la actualidad. ¿El motivo? Probablemente se deba a sus hábitos nocturnos y a sus peculiares cantos. El Búho Real (Bubo bubo) y la Lechuza Común (Tyto alba) son las dos especies que se han visto afectadas en mayor medida por estas historias. Ambas han tenido siempre diferentes interpretaciones dependiendo de la zona geográfica y de la cultura.
+                 Los mitos relacionados con el búho suelen ser duales, es decir que independientemente del origen de la leyenda, se le asocia con dos conceptos normalmente opuestos. Así, en algunas tribus de indígenas de Norteamérica, se decía que el búho brindaba al ser humano protección y ayuda en la oscuridad, mientras que en otras era considerado mensajero de la muerte. De la misma manera, los Mayas le consideraban mensajero del inframundo y a su vez simbolizaba la fertilidad.
+                 Desde la antigüedad clásica han sido asociados con el conocimiento y la cultura, quizás debido a su penetrante mirada. Asimismo, en la mitología griega también se les vinculaba con Tropos, siniestra deidad que cortaba el hilo del destino. También han sido considerados como símbolo de timidez debido a su vuelo sigiloso y hábitos nocturnos. La lechuza ha sido relacionada igualmente con diversos significados.
+                 En el antiguo Egipto representaba la noche, el frío y la muerte, o también la videncia. En el simbolismo cristiano ha tenido también diferentes interpretaciones. Sus hábitos nocturnos han sido tomados como temor a la luz, y por tanto se le ha considerado emisaría o agente del diablo. En algunas representaciones pictóricas de ermitaños aparecía una lechuza, como símbolo de soledad. Es el ave que ha tenido mayor influencia en el folclore popular debido a su estridente canto, siendo la causante de numerosas historias fantasmagóricas.</p></article>
+        </div>

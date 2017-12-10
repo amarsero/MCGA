@@ -12,7 +12,7 @@
     @* title - The title of the page which appears in the browser window title. Aim for the title to be less than 70
         characters. The site name appears at the end for better SEO. *@
     <title>@ViewBag.Title - @Application.Name</title>
-    <link href="~/Content/Custom.css" rel="stylesheet" />
+    <meta name="title" content="Zapateria Pepe">
 
     @* Icons & Platform Specific Settings (See http://rehansaeed.com/internet-favicon-madness/ for detailed
         information). The order of these icons is very important. FireFox has a bug in it which can cause problems if
@@ -78,6 +78,7 @@
     @* manifest-json - The location of the browser configuration file. It contains locations of icon files, name of the
         application and default device screen orientation. Note that the name field is mandatory.
         See https://developer.chrome.com/multidevice/android/installtohomescreen. *@
+    <meta name="keywords" content="Zapateria Pepe">
     <link rel="manifest" href="@Url.RouteUrl(HomeControllerRoute.GetManifestJson).TrimEnd('/')">
     @* theme-color - The colour of the toolbar in Chrome M39+
         See http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android *@
@@ -110,11 +111,11 @@
 
 
     @* Description - Used by search engines. Aim for more than 160 characters. *@
-    <meta name="description" content="@ViewBag.Description">
+    <meta name="description" content="Zapateria Pepe">
     @* Author - (Optional) Used by search engines. The author of the page. *@
     @if (ViewBag.Author != null)
     {
-        <meta name="author" content="@ViewBag.Author">
+        <meta name="author" content="Yo">
     }
     @* Render Twitter Card meta tags. *@
     @if (ViewBag.TwitterCard != null)
@@ -145,7 +146,7 @@
 
 
     @* OpenSearch - (See http://www.hanselman.com/blog/CommentView.aspx?guid=50cc95b1-c043-451f-9bc2-696dc564766d and http://www.opensearch.org) *@
-    <link href="@Url.RouteUrl(HomeControllerRoute.GetOpenSearchXml).TrimEnd('/')" rel="search" title="Architecture Solutions Foundation Search" type="application/opensearchdescription+xml">
+    <link href="@Url.Action("Index","Home")" rel="search" title="Zapatería Pepe">
 
 
     @* You can use the head section to render additional meta tags. *@
@@ -164,13 +165,15 @@
                     <span aria-hidden="true" class="icon-bar"></span>
                     <span aria-hidden="true" class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" role="banner" href="@Url.RouteUrl(HomeControllerRoute.GetIndex)"><span class="fa fa-star"></span> @Application.Name</a>
+                <a class="navbar-brand" role="banner" href="@Url.RouteUrl(HomeControllerRoute.GetIndex)"><span class="fa fa-paper-plane"></span> Zapatería Pepe</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.RouteUrl(HomeControllerRoute.GetAbout)"><span aria-hidden="true" class="fa fa-users"></span> About</a></li>
-                    <li><a href="@Url.RouteUrl(HomeControllerRoute.GetContact)"><span aria-hidden="true" class="fa fa-phone"></span> Contact</a></li>
-                    <li><a href="@Url.RouteUrl(HomeControllerRoute.GetFeed)"><span aria-hidden="true" class="fa fa-rss"></span> RSS</a></li>
+                    <li><a href="@Url.Action("Index","Showroom")"><span aria-hidden="true" class="fa fa-check"></span> Productos</a></li>
+                    <li><a href="@Url.RouteUrl(HomeControllerRoute.GetAbout)"><span aria-hidden="true" class="fa fa-users"></span> Sobre nosotros</a></li>
+                    <li><a href="@Url.RouteUrl(HomeControllerRoute.GetContact)"><span aria-hidden="true" class="fa fa-phone"></span> Contacto</a></li>
+                    @if ((Request.IsAuthenticated && User.Identity.Name == "admin@asf.com"))
+                    {
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><span aria-hidden="true" class="fa fa-cogs"></span> Negocio <span aria-hidden="true" class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -180,8 +183,6 @@
                             <li><a href="/Country/Index"><span aria-hidden="true" class="fa fa-bullhorn"></span> Country</a></li>
                         </ul>
                     </li>
-                    @if (HttpContext.Current.IsDebuggingEnabled)
-                    {
                         // if <compilation debug="true"> is set in Web.config.
                         <li class="dropdown">
                             <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown"><span aria-hidden="true" class="fa fa-cogs"></span> Debug <span aria-hidden="true" class="caret"></span></a>
@@ -215,7 +216,21 @@
         @RenderBody()
         <hr>
         <footer role="contentinfo">
-            <p>&copy; @DateTime.Now.Year - @Application.Name</p>
+        <div class="social">
+            <ul>
+                <li>
+                    @DateTime.Now.Year - Zapatería Pepe - </li>
+                <li><a href="https://www.facebook.com/clarincom/"><i class="fa fa-lg fa-facebook"></i></a></li>
+                <li><a href="https://twitter.com/realdonaldtrump"><i class="fa fa-lg fa-twitter"></i></a></li>
+                <li><a href="https://plus.google.com/+britneyspears"><i class="fa fa-lg fa-google-plus"></i></a></li>
+                <li><a href="https://ar.linkedin.com/in/lautaro-sarni-13074b97"><i class="fa fa-lg fa-linkedin"></i></a></li>
+                <li><a href="https://www.instagram.com/jaycharni/"><i class="fa fa-lg fa-instagram"></i></a></li>
+                <li><a href="/feed/"><i class="fa fa-lg fa-rss"></i></a></li>
+                <li><a href="https://www.youtube.com/user/HowToBasic"><i class="fa fa-lg fa-youtube-play"></i></a></li>
+                <li><a href="@Url.Action("SitemapXml","Home")"><i class="fa fa-lg fa-dribbble"></i></a></li> @*Sitemap*@
+            </ul>
+        </div>
+
         </footer>
     </div>
 
@@ -225,5 +240,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/site")
     @RenderSection("scripts", required: false)
+
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+    <link href="~/Content/Social.css" rel="stylesheet" />
+
 </body>
 </html>
